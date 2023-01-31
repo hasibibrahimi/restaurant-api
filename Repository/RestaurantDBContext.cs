@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class BookDBContext : IdentityDbContext<ApplicationUser>
+    public class RestaurantDBContext : IdentityDbContext<ApplicationUser>
     {
-        public BookDBContext(DbContextOptions<BookDBContext> options)
+        public RestaurantDBContext(DbContextOptions<BookDBContext> options)
              : base(options)
         {
         }

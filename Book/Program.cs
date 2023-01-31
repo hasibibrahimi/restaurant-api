@@ -12,9 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddDbContext<BookDBContext>(opt =>
+builder.Services.AddDbContext<RestaurantDBContext>(opt =>
 {
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("BookDbConnection"));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("RestaurantDbConnection"));
 });
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -67,7 +67,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 	options.User.RequireUniqueEmail = true;
 
 })
-   .AddEntityFrameworkStores<BookDBContext>()
+   .AddEntityFrameworkStores<RestaurantDBContext>()
    .AddDefaultTokenProviders();
 
 
