@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Interfaces;
+using Domain.Models;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +10,49 @@ namespace Restaurant.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
+        private readonly ICategoryService _categoryService;
+        public CategoryController(ICategoryService categoryService)
+        {
+            _categoryService = categoryService;
+        }
         // GET: api/<CategoryController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<CategoryDTO>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var result = await _categoryService.GetAllCategories();
+            return Ok(result);
         }
 
         // GET api/<CategoryController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<CategoryDTO>> Get(long id)
         {
-            return "value";
+            var result = await _categoryService.GetCategoryById(id);
+            return Ok(result);
         }
 
         // POST api/<CategoryController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<FoodDTO>> Post([FromBody] CategoryDTO categoryDTO)
         {
+            await _categoryService.AddCategory(categoryDTO);
+            return Ok();
         }
 
         // PUT api/<CategoryController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult<CategoryDTO>> Put([FromBody] CategoryDTO categoryDTO)
         {
+            await _categoryService.UpdateCategory(categoryDTO);
+            return Ok();
         }
 
         // DELETE api/<CategoryController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<CategoryDTO>> Delete(long id)
         {
+            await _categoryService.DeleteCategory(id);
+            return Ok();
         }
     }
 }

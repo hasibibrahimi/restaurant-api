@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Interfaces;
+using Domain.Models;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +10,49 @@ namespace Restaurant.Controllers
     [ApiController]
     public class FoodController : ControllerBase
     {
+        private readonly IFoodService _foodService;
+        public FoodController(IFoodService foodService)
+        {
+            _foodService = foodService;
+        }
         // GET: api/<FoodController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<FoodDTO>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var result = await _foodService.GetAllFoods();
+            return Ok(result);
         }
 
         // GET api/<FoodController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<FoodDTO>> Get(long id)
         {
-            return "value";
+            var result = await _foodService.GetFoodById(id);
+            return Ok(result);
         }
 
         // POST api/<FoodController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<FoodDTO>> Post([FromBody] FoodDTO foodDTO)
         {
+             await _foodService.AddFood(foodDTO);
+            return Ok();
         }
 
         // PUT api/<FoodController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult<FoodDTO>> Put([FromBody] FoodDTO foodDTO)
         {
+            await _foodService.UpdateFood(foodDTO);
+            return Ok();
         }
 
         // DELETE api/<FoodController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<FoodDTO>> Delete(long id)
         {
+            await _foodService.DeleteFood(id);
+            return Ok();
         }
     }
 }
