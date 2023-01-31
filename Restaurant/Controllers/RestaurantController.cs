@@ -34,22 +34,30 @@ namespace Restaurant.Controllers
 
         // POST api/<RestaurantController>
         [HttpPost]
-        public async Task<ActionResult<RestaurantDTO>> Post([FromBody] RestaurantDTO foodDTO)
+        public async Task<ActionResult<RestaurantDTO>> Post([FromBody] RestaurantDTO restaurantDTO)
         {
-            await _restaurantService.AddRestaurant(foodDTO);
+            await _restaurantService.AddRestaurant(restaurantDTO);
+            return Ok();
+        }
+
+        // POST api/<RestaurantController>
+        [HttpPost("food")]
+        public async Task<ActionResult<RestaurantDTO>> AddFoodToRestaurant(string restaurantId,long foodId)
+        {
+            await _restaurantService.AddFoodToRestaurant(restaurantId, foodId);
             return Ok();
         }
 
         // PUT api/<RestaurantController>/5
-        [HttpPut("{id}")]
-        public async Task<ActionResult<RestaurantDTO>> Put([FromBody] RestaurantDTO foodDTO)
+        [HttpPut()]
+        public async Task<ActionResult<RestaurantDTO>> Put([FromBody] RestaurantDTO restaurantDTO)
         {
-            await _restaurantService.UpdateRestaurant(foodDTO);
+            await _restaurantService.UpdateRestaurant(restaurantDTO);
             return Ok();
         }
 
         // DELETE api/<RestaurantController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete()]
         public async Task<ActionResult<RestaurantDTO>> Delete(string id)
         {
             await _restaurantService.DeleteRestaurant(id);

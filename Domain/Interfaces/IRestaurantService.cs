@@ -12,6 +12,7 @@ namespace Domain.Interfaces
         Task<IEnumerable<RestaurantDTO>> GetAllRestaurants();
         Task<RestaurantDTO> GetRestaurantById(string id);
         Task AddRestaurant(RestaurantDTO restaurantDTO);
+        Task AddFoodToRestaurant(string restaurantId, long foodId);
         Task UpdateRestaurant(RestaurantDTO restaurantDTO);
         Task DeleteRestaurant(string id);
     }

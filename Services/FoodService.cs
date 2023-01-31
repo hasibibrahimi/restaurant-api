@@ -27,7 +27,12 @@ namespace Services
                 Name = x.Name,
                 Price = x.Price,
                 RestaurantId = x.RestaurantId,
-                CategoryId = x.CategoryId
+                CategoryId = x.CategoryId,
+                Category = x.Category != null ? new CategoryDTO
+                {
+                    Id = x.Category.Id,
+                    Name = x.Category.Name
+                } : null
             }).ToList();
         }
 
@@ -45,7 +50,12 @@ namespace Services
                 Name = food.Name,
                 Price = food.Price,
                 RestaurantId = food.RestaurantId,
-                CategoryId = food.CategoryId
+                CategoryId = food.CategoryId,
+                Category = food.Category != null ? new CategoryDTO
+                {
+                    Id = food.Category.Id,
+                    Name = food.Category.Name
+                } : null
             };
         }
         public async Task AddFood(FoodDTO foodDTO)

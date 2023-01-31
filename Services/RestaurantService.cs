@@ -12,9 +12,11 @@ namespace Services
     public class RestaurantService : IRestaurantService
     {
         private readonly IRestaurantRepository _restaurantRepository;
-        public RestaurantService(IRestaurantRepository restaurantRepository)
+        private readonly IFoodRepository _foodRepository;
+        public RestaurantService(IRestaurantRepository restaurantRepository, IFoodRepository foodRepository)
         {
             _restaurantRepository = restaurantRepository;
+            _foodRepository = foodRepository;
         }
 
         public async Task<IEnumerable<RestaurantDTO>> GetAllRestaurants()
@@ -26,16 +28,16 @@ namespace Services
                 Name = x.Name,
                 Image = x.Image,
                 WorkingHours = x.WorkingHours,
-                Food = x.Foods.Select(x => new FoodDTO 
+                Food =x.Foods?.Select(x => new FoodDTO 
                 {
                     Id = x.Id, 
                     Name = x.Name,
                     Image = x.Image,
-                    Category = new CategoryDTO
+                    Category = x.Category !=null ? new CategoryDTO
                     {
                         Id = x.Category.Id,
                         Name = x.Category.Name
-                    }
+                    } : null
                 }).ToList(),      
             }).ToList();
         }
@@ -52,7 +54,18 @@ namespace Services
                 Id = restaurant.Id,
                 Name = restaurant.Name,
                 Image = restaurant.Image,
-                WorkingHours = restaurant.WorkingHours
+                WorkingHours = restaurant.WorkingHours,
+                Food = restaurant.Foods?.Select(x => new FoodDTO
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Image = x.Image,
+                    Category = x.Category != null ? new CategoryDTO
+                    {
+                        Id = x.Category.Id,
+                        Name = x.Category.Name
+                    } : null
+                }).ToList()
             };
         }
 
@@ -66,6 +79,13 @@ namespace Services
                 WorkingHours = restaurantDTO.WorkingHours
             };
            await _restaurantRepository.AddRestaurant(restaurant);
+        }
+        public async Task AddFoodToRestaurant(string restaurantId, long foodId)
+        {
+            var restaurant = await _restaurantRepository.GetRestaurantById(restaurantId);
+            var food = await _foodRepository.GetFoodById(foodId);
+            restaurant.Foods.Add(food);
+            await _restaurantRepository.UpdateRestaurant(restaurant);
         }
 
         public async Task UpdateRestaurant(RestaurantDTO restaurantDTO)

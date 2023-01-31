@@ -40,7 +40,7 @@ namespace Restaurant.Controllers
         }
 
         // PUT api/<CategoryController>/5
-        [HttpPut("{id}")]
+        [HttpPut()]
         public async Task<ActionResult<CategoryDTO>> Put([FromBody] CategoryDTO categoryDTO)
         {
             await _categoryService.UpdateCategory(categoryDTO);
@@ -48,7 +48,7 @@ namespace Restaurant.Controllers
         }
 
         // DELETE api/<CategoryController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete()]
         public async Task<ActionResult<CategoryDTO>> Delete(long id)
         {
             await _categoryService.DeleteCategory(id);

@@ -33,14 +33,14 @@ namespace Restaurant.Controllers
 
         // POST api/<FoodController>
         [HttpPost]
-        public async Task<ActionResult<FoodDTO>> Post([FromBody] FoodDTO foodDTO)
+        public async Task<ActionResult<FoodDTO>> Post([FromBody] FoodDTO? foodDTO)
         {
              await _foodService.AddFood(foodDTO);
             return Ok();
         }
 
         // PUT api/<FoodController>/5
-        [HttpPut("{id}")]
+        [HttpPut()]
         public async Task<ActionResult<FoodDTO>> Put([FromBody] FoodDTO foodDTO)
         {
             await _foodService.UpdateFood(foodDTO);
@@ -48,7 +48,7 @@ namespace Restaurant.Controllers
         }
 
         // DELETE api/<FoodController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete()]
         public async Task<ActionResult<FoodDTO>> Delete(long id)
         {
             await _foodService.DeleteFood(id);
