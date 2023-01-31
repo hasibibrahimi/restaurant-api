@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Book": {
+    "Restaurant": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

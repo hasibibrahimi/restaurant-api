@@ -9,7 +9,11 @@ namespace Domain.Entities
 {
     public class ApplicationUser : IdentityUser
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Image { get; set; }
+        public string WorkingHours { get; set; }
+
+        public virtual ICollection<Food> Foods { get; set; }
     }
 }

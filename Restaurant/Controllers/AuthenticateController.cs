@@ -8,7 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Book.Controllers
+namespace Restaurant.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -80,8 +80,7 @@ namespace Book.Controllers
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username,
-                FirstName = "Test",
-                LastName = "LastName"
+                
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)

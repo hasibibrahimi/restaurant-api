@@ -1,4 +1,4 @@
-namespace Book
+namespace Restaurant
 {
     public class WeatherForecast
     {
