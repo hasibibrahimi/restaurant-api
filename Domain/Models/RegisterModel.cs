@@ -18,5 +18,8 @@ namespace Domain.Models
 
         [Required(ErrorMessage = "Password is required")]
         public string? Password { get; set; }
+        public string? Name { get; set; }
+        public string? Image { get; set; }
+        public string? WorkingHours { get; set; }
     }
 }
