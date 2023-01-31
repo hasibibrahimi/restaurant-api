@@ -1,6 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -32,14 +34,7 @@ namespace Restaurant.Controllers
             return Ok(result);
         }
 
-        // POST api/<RestaurantController>
-        [HttpPost]
-        public async Task<ActionResult<RestaurantDTO>> Post([FromBody] RestaurantDTO restaurantDTO)
-        {
-            await _restaurantService.AddRestaurant(restaurantDTO);
-            return Ok();
-        }
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         // POST api/<RestaurantController>
         [HttpPost("food")]
         public async Task<ActionResult<RestaurantDTO>> AddFoodToRestaurant(string restaurantId,long foodId)
@@ -48,6 +43,7 @@ namespace Restaurant.Controllers
             return Ok();
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         // PUT api/<RestaurantController>/5
         [HttpPut()]
         public async Task<ActionResult<RestaurantDTO>> Put([FromBody] RestaurantDTO restaurantDTO)
@@ -56,6 +52,7 @@ namespace Restaurant.Controllers
             return Ok();
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         // DELETE api/<RestaurantController>/5
         [HttpDelete()]
         public async Task<ActionResult<RestaurantDTO>> Delete(string id)

@@ -1,6 +1,9 @@
 ﻿using Domain.Interfaces;
 using Domain.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -31,6 +34,7 @@ namespace Restaurant.Controllers
             return Ok(result);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         // POST api/<CategoryController>
         [HttpPost]
         public async Task<ActionResult<FoodDTO>> Post([FromBody] CategoryDTO categoryDTO)
@@ -39,6 +43,7 @@ namespace Restaurant.Controllers
             return Ok();
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         // PUT api/<CategoryController>/5
         [HttpPut()]
         public async Task<ActionResult<CategoryDTO>> Put([FromBody] CategoryDTO categoryDTO)
@@ -47,6 +52,7 @@ namespace Restaurant.Controllers
             return Ok();
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         // DELETE api/<CategoryController>/5
         [HttpDelete()]
         public async Task<ActionResult<CategoryDTO>> Delete(long id)

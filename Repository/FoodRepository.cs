@@ -19,12 +19,12 @@ namespace Repository
         }
         public async Task<Food> GetFoodById(long id)
         {
-            return await _context.Foods.FindAsync(id);
+            return await _context.Foods.Include(t => t.Category).FirstOrDefaultAsync(t => t.Id == id);
         }
 
         public async Task<IEnumerable<Food>> GetAllFoods()
         {
-            return await _context.Foods.ToListAsync();
+            return await _context.Foods.Include(t => t.Category).ToListAsync();
         }
 
         public async Task AddFood(Food food)
