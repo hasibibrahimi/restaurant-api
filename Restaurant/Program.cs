@@ -70,17 +70,20 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
    .AddEntityFrameworkStores<RestaurantDBContext>()
    .AddDefaultTokenProviders();
 
-
-
+builder.Services.AddCors(options =>
+	options.AddPolicy("MyPolicy",
+		builder => {
+			builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+		}
+	)
+);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+app.UseCors("MyPolicy");
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+
 
 app.UseHttpsRedirection();
 
